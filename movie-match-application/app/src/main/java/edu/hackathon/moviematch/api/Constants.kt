@@ -2,7 +2,7 @@ package edu.hackathon.moviematch.api
 object Constants {
     const val API_BASE_URL = "";
     const val OPEN_AI_API_URL = "https://api.openai.com/";
-    const val OPEN_AI_TOKEN = "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"
+    const val OPEN_AI_TOKEN = "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"
     const val MOVIE_DB_API_URL = "https://api.themoviedb.org/"
     const val MOVIE_DB_API_KEY = "55b7f8db758832ecfab9176b81841cdf"
 }

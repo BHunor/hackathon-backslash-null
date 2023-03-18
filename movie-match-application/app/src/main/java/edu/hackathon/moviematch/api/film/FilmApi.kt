@@ -19,4 +19,5 @@ interface FilmApi {
                             @Query("query") query: String,
                             @Query("page") page: Int
                             ): Response<SearchFilmResponse>
+
 }
