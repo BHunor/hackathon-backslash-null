@@ -6,6 +6,7 @@ object Constants {
     const val OPEN_AI_TOKEN = "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"
     const val MOVIE_DB_API_URL = "https://api.themoviedb.org/"
 =======
+    const val OPEN_AI_TOKEN = "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"
     const val MOVIE_DB_API_URL = "https://api.themoviedb.org/3/"
 >>>>>>> Stashed changes
     const val MOVIE_DB_API_KEY = "55b7f8db758832ecfab9176b81841cdf"
