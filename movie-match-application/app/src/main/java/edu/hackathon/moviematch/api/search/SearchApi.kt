@@ -14,6 +14,6 @@ interface SearchApi {
         }
     }
 
-    @POST("/completions")
+    @POST("/v1/chat/completions")
     suspend fun askForFilms(@Header("Authorization") token: String, @Body askRequest: AskRequest): Response<AskResponse>
 }

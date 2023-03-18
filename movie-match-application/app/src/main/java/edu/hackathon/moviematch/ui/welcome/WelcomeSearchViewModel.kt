@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import edu.hackathon.moviematch.api.search.AskRequest
 import edu.hackathon.moviematch.api.search.AskResponse
+import edu.hackathon.moviematch.api.search.Message
 import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.MovieMatchViewModel
@@ -44,9 +45,11 @@ class WelcomeSearchViewModel(
         viewModelScope.launch {
             try {
                 val response = _repo.askForFilms(
-                    token = token,
+                    token = "Bearer $token",
                     askRequest = AskRequest(
-
+                        messages = listOf(
+                            Message(content = content)
+                        )
                     )
                 )
 
