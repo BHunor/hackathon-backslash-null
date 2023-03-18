@@ -2,7 +2,7 @@ package edu.hackathon.moviematch.api.film
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchFilmResponse(
+data class SearchFilmResultResponse(
     @SerializedName("id")
     var movieId: Int,
     @SerializedName("original_title")
@@ -21,4 +21,8 @@ data class SearchFilmResponse(
     var video: Boolean,
     @SerializedName("vote_average")
     var rating: Float
+)
+data class SearchFilmResponse(
+    @SerializedName("page")
+    var page: Int,
 )

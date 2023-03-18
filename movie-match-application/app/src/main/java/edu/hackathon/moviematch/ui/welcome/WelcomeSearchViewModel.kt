@@ -46,10 +46,17 @@ class WelcomeSearchViewModel(
     private var _searchResponse: SearchFilmResponse? = null
     val searchResponse get() = _searchResponse
 
+    private var _loadFilmsResult = MutableLiveData<ApiResults>()
+    val loadFilmsResult get() = _loadFilmsResult
+    private var _loadFilmsResponse: MutableList<SearchFilmResponse>? = null
+    val loadFilmsResponse get() = _loadFilmsResponse
+
+    private var _lastAskedContents: MutableList<String>? = null
+    val lastAskedContents get() = _lastAskedContents
     fun askForFilms(content: String) {
         _askResult.value = ApiResults.LOADING
 
-        val askContent: String = "Suggest films, which are connected to: `$content`. Provide only the titles, separate it with comas, without any extra signs."
+        val askContent = "Suggest films, which are connected to: `$content`. Provide only the titles, separate it with semicolon, without any extra signs."
         viewModelScope.launch {
             try {
                 val response = _repo.askForFilms(
@@ -64,9 +71,15 @@ class WelcomeSearchViewModel(
                 if (response?.isSuccessful == true) {
                     _askResponse = response.body()!!
 
-                    _askResult.value = ApiResults.SUCCESS
+                    _lastAskedContents = mutableListOf()
 
-                    Log.d(TAG, _askResponse.toString())
+                    askResponse!!.choices[0].message.content.replace(".", "")
+                        .split("; ").
+                        forEach{
+                            lastAskedContents!!.add(it.replace("; ", ""))
+                        }
+
+                    _askResult.value = ApiResults.SUCCESS
                 }
                 else {
                     _askResult.value = ApiResults.INVALID_TOKEN
@@ -79,7 +92,7 @@ class WelcomeSearchViewModel(
         }
     }
 
-    fun searchForFilms(query: String) {
+    fun searchForFilm(query: String)  {
         _searchResult.value = ApiResults.LOADING
 
         viewModelScope.launch {
@@ -107,5 +120,46 @@ class WelcomeSearchViewModel(
                 _searchResult.value = ApiResults.UNKNOWN_ERROR
             }
         }
+    }
+
+    fun searchForFilms(queries: List<String>) {
+        _loadFilmsResult.value = ApiResults.LOADING
+
+        _loadFilmsResponse = mutableListOf()
+
+        for (query in queries) {
+
+            viewModelScope.launch {
+                try {
+                    val  response = _repo.searchMovieByName(
+                        apiKey = apiKey,
+                        language = "en-US",
+                        query = query,
+                        page = 1
+                    )
+
+                    if (response?.isSuccessful == true) {
+
+                        Log.d(TAG, "kicsikutya")
+
+                        _loadFilmsResponse!!.add(
+                            element = response.body()!!
+                        )
+
+                        _loadFilmsResult.value = ApiResults.SUCCESS
+
+                        Log.d(TAG, _searchResponse.toString())
+                    }
+                    else {
+                        _loadFilmsResult.value = ApiResults.INVALID_TOKEN
+                    }
+                }
+                catch (ex: Exception) {
+                    Log.e(TAG, ex.message, ex)
+                    _searchResult.value = ApiResults.UNKNOWN_ERROR
+                }
+            }
+        }
+
     }
 }

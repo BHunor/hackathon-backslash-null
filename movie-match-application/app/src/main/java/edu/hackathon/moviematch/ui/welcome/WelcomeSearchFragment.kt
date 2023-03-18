@@ -98,7 +98,51 @@ class WelcomeSearchFragment : Fragment() {
 
                 ApiResults.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.d(TAG, _viewModel.askResponse.toString())
+                    Log.d(TAG, _viewModel.askResponse!!.choices[0].message.content)
+
+                    val queries = _viewModel.lastAskedContents
+                    queries?.forEach {
+                        Log.d(TAG, it)
+                    }
+
+                    if (queries == null) {
+                        // handle
+                        return@observe
+                    }
+
+                    // observe
+                    _viewModel.searchForFilms(queries)
+                    observeFilmsResult()
+                }
+
+                ApiResults.INVALID_TOKEN -> {
+                    // WHAT TODO
+                    Log.e(TAG, "INVALID TOKEN")
+                    return@observe
+                }
+
+                ApiResults.UNKNOWN_ERROR -> {
+                    Log.e(TAG, "UNKNOWN ERROR")
+                    return@observe
+                }
+
+                else -> return@observe
+            }
+        }
+    }
+
+    private fun observeFilmsResult() {
+        _viewModel.loadFilmsResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                ApiResults.LOADING -> {
+                    // TODO show progress bar
+                    return@observe
+                }
+
+                ApiResults.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
+                    Log.d(TAG, _viewModel.loadFilmsResult.toString())
+
                 }
 
                 ApiResults.INVALID_TOKEN -> {
