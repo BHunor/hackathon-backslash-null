@@ -51,12 +51,15 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initSearchButton()
-        initLoginButton()
+        initButtons()
     }
 
-    private fun initLoginButton() {
+    private fun initButtons() {
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.loginFragment)
+        }
+        binding.btnRegister.setOnClickListener{
+            findNavController().navigate(R.id.registerFragment)
         }
     }
 

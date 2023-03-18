@@ -73,8 +73,7 @@ class DetailFragment : Fragment() {
                         findNavController().navigate(R.id.action_detailFragment_to_fragment_welcome_search)
                     }
                     binding.btnSearch2.setOnClickListener{
-                        //TODO go login fragment
-//                        findNavController().navigate(R.id.action_detailFragment_to_fragment_welcome_search)
+                        findNavController().navigate(R.id.loginFragment)
                     }
                 }
 
