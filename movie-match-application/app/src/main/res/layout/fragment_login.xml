@@ -23,26 +23,27 @@
             android:id="@+id/email_edittext"
             android:layout_width="358dp"
             android:layout_height="52dp"
+            android:layout_marginTop="112dp"
             android:background="@drawable/rounded_corner"
             android:hint="@string/user_name"
             android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mmlogo"
-            app:layout_constraintVertical_bias="0.272" />
+            app:layout_constraintTop_toBottomOf="@+id/mmlogo" />
 
         <EditText
             android:id="@+id/password_edittext"
             android:layout_width="358dp"
             android:layout_height="52dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/rounded_corner"
             android:hint="@string/password"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username_edittext" />
+            app:layout_constraintTop_toBottomOf="@+id/email_edittext" />
 
         <Button
             android:id="@+id/btn_login"

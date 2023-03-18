@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_fragment_welcome_search_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_fragment_welcome_search_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragment_welcome_search_to_registerFragment2"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -22,5 +28,41 @@
         <action
             android:id="@+id/action_detailFragment_to_fragment_welcome_search"
             app:destination="@id/fragment_welcome_search" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="edu.hackathon.moviematch.ui.authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_feedFragment"
+            app:destination="@id/fragment_feed" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="edu.hackathon.moviematch.ui.authentication.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_feedFragment"
+            app:destination="@id/fragment_feed" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_feed"
+        android:name="edu.hackathon.moviematch.ui.feed.FeedFragment"
+        android:label="fragment_feed"
+        tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_fragment_feed_to_fragment_mood"
+            app:destination="@id/fragment_mood" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_mood"
+        android:name="edu.hackathon.moviematch.ui.mood.MoodFragment"
+        android:label="fragment_mood"
+        tools:layout="@layout/fragment_mood">
+        <action
+            android:id="@+id/action_fragment_mood_to_fragment_feed"
+            app:destination="@id/fragment_feed" />
     </fragment>
 </navigation>
