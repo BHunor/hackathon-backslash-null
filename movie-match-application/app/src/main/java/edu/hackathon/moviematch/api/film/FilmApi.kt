@@ -21,7 +21,7 @@ interface FilmApi {
                             @Query("page") page: Int
                             ): Response<SearchFilmResponse>
 
-    @GET("movie/{id}")
+    @GET("/3/4movie/{id}")
     suspend fun getMovieDetail(@Path("id") id:Int,
                                @Query("api_key") apiKey: String,
                                @Query("language") language: String): Response<FilmDetails>
