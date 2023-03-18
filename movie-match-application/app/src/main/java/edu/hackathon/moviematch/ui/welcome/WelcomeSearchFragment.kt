@@ -1,18 +1,24 @@
 package edu.hackathon.moviematch.ui.welcome
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.hackathon.moviematch.R
-import edu.hackathon.moviematch.api.search.SearchApi
+import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintLayout.*
+import androidx.core.view.marginLeft
+import androidx.fragment.app.Fragment
 import edu.hackathon.moviematch.databinding.FragmentWelcomeSearchBinding
 import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.Preferences
+
 
 class WelcomeSearchFragment : Fragment() {
 
@@ -22,7 +28,7 @@ class WelcomeSearchFragment : Fragment() {
 
     private var _binding: FragmentWelcomeSearchBinding? = null
     private val binding get() = _binding!!
-
+    private var _searching:Boolean = false
     private lateinit var _viewModel: WelcomeSearchViewModel
 
     override fun onCreateView(
@@ -43,15 +49,41 @@ class WelcomeSearchFragment : Fragment() {
         ).create(WelcomeSearchViewModel::class.java)
 
         binding.btnSearch.setOnClickListener {
-            _viewModel.askResult.removeObservers(viewLifecycleOwner)
-            if (binding.etSearch.text.isEmpty()) {
-                return@setOnClickListener
-            }
+            if(!binding.etSearch.text.isEmpty()) {
+                //            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
+                //            binding.etSearch.startAnimation(animation)
+                binding.mmlogo.visibility = View.GONE
+                if (!_searching) {
+                    val anim = ObjectAnimator.ofFloat(binding.etSearch, "translationY", 0f, -900f)
+                    anim.duration = 1000
+                    anim.start()
 
-            _viewModel.askForFilms(
-                binding.etSearch.text.toString()
-            )
-            observeAskResult()
+                    anim.addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            binding.etSearch.translationY = -900f // Az elem helyzetének beállítása
+                        }
+                    })
+                    val anim2 = ObjectAnimator.ofFloat(binding.btnSearch, "translationY", 0f, -900f)
+                    anim2.duration = 1000
+                    anim2.start()
+                    anim.addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            binding.etSearch.translationY = -900f // Az elem helyzetének beállítása
+                        }
+                    })
+                    _searching = true;
+                }
+                binding.progressBar.visibility = View.VISIBLE
+                _viewModel.askResult.removeObservers(viewLifecycleOwner)
+                if (binding.etSearch.text.isEmpty()) {
+                    return@setOnClickListener
+                }
+
+                _viewModel.askForFilms(
+                    binding.etSearch.text.toString()
+                )
+                observeAskResult()
+            }
         }
     }
 
@@ -65,6 +97,7 @@ class WelcomeSearchFragment : Fragment() {
                 }
 
                 ApiResults.SUCCESS -> {
+                    binding.progressBar.visibility = View.GONE
                     Log.d(TAG, _viewModel.askResponse.toString())
                 }
 
