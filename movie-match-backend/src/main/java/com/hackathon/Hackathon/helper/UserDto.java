@@ -1,4 +1,8 @@
 package com.hackathon.Hackathon.helper;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class UserDto {
     private Long id;
     private String firstName;
@@ -6,6 +10,8 @@ public class UserDto {
     private String email;
     private String password;
     private String role;
+
+    private LocalDateTime dateOfBirth;
 
     public Long getId() {
         return id;
@@ -55,4 +61,11 @@ public class UserDto {
         this.role = role;
     }
 
+    public LocalDateTime getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 }

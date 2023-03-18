@@ -8,13 +8,8 @@ import com.hackathon.Hackathon.model.UserEntity;
 import com.hackathon.Hackathon.repository.UserRepository;
 import com.hackathon.Hackathon.service.UserService;
 import com.hackathon.Hackathon.util.Utility;
-import liquibase.repackaged.org.apache.commons.lang3.RandomStringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -35,6 +30,7 @@ public class UserServiceImpl implements UserService {
         userDto.setEmail(registerUserDto.getEmail());
         userDto.setPassword(registerUserDto.getPassword());
         userDto.setRole(registerUserDto.getRole());
+        userDto.setDateOfBirth(registerUserDto.getDateOfBirth());
         UserEntity userEntity = userMapper.toEntity(userDto);
         UserEntity newUser = userRepository.save(userEntity);
         return userMapper.ToResponseUserDto(newUser);

@@ -1,6 +1,7 @@
 package com.hackathon.Hackathon.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -25,6 +26,8 @@ public class UserEntity {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "dateOfBirth")
+    private LocalDateTime dateOfBirth;
     public Long getId() {
         return id;
     }
@@ -71,5 +74,13 @@ public class UserEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public LocalDateTime getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(LocalDateTime dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

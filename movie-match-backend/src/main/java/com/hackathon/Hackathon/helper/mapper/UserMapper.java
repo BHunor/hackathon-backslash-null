@@ -41,6 +41,7 @@ public class UserMapper {
         userDto.setEmail(userEntity.getEmail());
         userDto.setPassword(userEntity.getPassword());
         userDto.setRole(userEntity.getRole());
+        userDto.setDateOfBirth(userEntity.getDateOfBirth());
         return userDto;
     }
 
@@ -56,7 +57,7 @@ public class UserMapper {
         userResponseDto.setEmail(userEntity.getEmail());
         userResponseDto.setFirstName(userEntity.getFirstName());
         userResponseDto.setLastName(userEntity.getLastName());
-
+        userResponseDto.setDateOfBirth(userEntity.getDateOfBirth());
         return userResponseDto;
     }
 
@@ -68,7 +69,7 @@ public class UserMapper {
         userReturnDto.setFirstName(userEntity.getFirstName());
         userReturnDto.setLastName(userEntity.getLastName());
         userReturnDto.setRole(userEntity.getRole());
-
+        userReturnDto.setDateOfBirth(userEntity.getDateOfBirth());
         return userReturnDto;
     }
 
