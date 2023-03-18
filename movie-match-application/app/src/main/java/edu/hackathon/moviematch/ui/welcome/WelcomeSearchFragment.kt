@@ -49,60 +49,14 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnSearch.setOnClickListener {
-            _viewModel.searchWord = binding.etSearch.text.toString()
-            if(binding.etSearch.text.isNotEmpty()) {
-                binding.mmlogo.visibility = View.GONE
-                if (!_searching) {
-                    val anim = ObjectAnimator.ofFloat(binding.etSearch, "translationY", 0f, -900f)
-                    anim.duration = 1000
-                    anim.start()
 
-                    anim.addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            binding.etSearch.translationY = -900f // Az elem helyzetének beállítása
-                        }
-                    })
-                    val anim2 = ObjectAnimator.ofFloat(binding.btnSearch, "translationY", 0f, -900f)
-                    anim2.duration = 1000
-                    anim2.start()
-                    anim.addListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator) {
-                            binding.btnSearch.translationY = -900f // Az elem helyzetének beállítása
-                        }
-                    })
-                    _searching = true;
-                }
-                binding.progressBar.visibility = View.VISIBLE
-                _viewModel.askResult.removeObservers(viewLifecycleOwner)
-                if (binding.etSearch.text.isEmpty()) {
-                    return@setOnClickListener
-                }
+        initSearchButton()
+        initLoginButton()
+    }
 
-                _viewModel.askForFilms(
-                    binding.etSearch.text.toString()
-                )
-                observeAskResult()
-            }
-        }
-        if(_viewModel.backFromDetails){
-            binding.mmlogo.visibility = View.GONE
-            binding.etSearch.translationY = -900f
-            binding.btnSearch.translationY = -900f
-            binding.etSearch.setText(_viewModel.searchWord)
-            _searching = true
-            binding.progressBar.visibility = View.GONE
-            Log.d(TAG, _viewModel.loadFilmsResult.toString())
-            var searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
-            _viewModel.loadFilmsResponse?.forEach {
-                if(searchFilmResponses.size < 9) {
-                    searchFilmResponses.add(it.results.get(0));
-                }
-            }
-            binding.gridView.adapter = GridAdapter(requireContext(), searchFilmResponses, listener = this@WelcomeSearchFragment)
-            binding.gridView.visibility = View.VISIBLE
-            Log.d(TAG, _viewModel.askResponse.toString())
-            _viewModel.backFromDetails = false
+    private fun initLoginButton() {
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.loginFragment)
         }
     }
 
@@ -195,6 +149,65 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 
                 else -> return@observe
             }
+        }
+    }
+
+    private fun initSearchButton() {
+        binding.btnSearch.setOnClickListener {
+            _viewModel.searchWord = binding.etSearch.text.toString()
+
+            if(binding.etSearch.text.isNotEmpty()) {
+                binding.mmlogo.visibility = View.GONE
+                if (!_searching) {
+                    val anim = ObjectAnimator.ofFloat(binding.etSearch, "translationY", 0f, -900f)
+                    anim.duration = 1000
+                    anim.start()
+
+                    anim.addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            binding.etSearch.translationY = -900f // Az elem helyzetének beállítása
+                        }
+                    })
+                    val anim2 = ObjectAnimator.ofFloat(binding.btnSearch, "translationY", 0f, -900f)
+                    anim2.duration = 1000
+                    anim2.start()
+                    anim.addListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator) {
+                            binding.btnSearch.translationY = -900f // Az elem helyzetének beállítása
+                        }
+                    })
+                    _searching = true;
+                }
+                binding.progressBar.visibility = View.VISIBLE
+                _viewModel.askResult.removeObservers(viewLifecycleOwner)
+                if (binding.etSearch.text.isEmpty()) {
+                    return@setOnClickListener
+                }
+
+                _viewModel.askForFilms(
+                    binding.etSearch.text.toString()
+                )
+                observeAskResult()
+            }
+        }
+        if(_viewModel.backFromDetails){
+            binding.mmlogo.visibility = View.GONE
+            binding.etSearch.translationY = -900f
+            binding.btnSearch.translationY = -900f
+            binding.etSearch.setText(_viewModel.searchWord)
+            _searching = true
+            binding.progressBar.visibility = View.GONE
+            Log.d(TAG, _viewModel.loadFilmsResult.toString())
+            var searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
+            _viewModel.loadFilmsResponse?.forEach {
+                if(searchFilmResponses.size < 9) {
+                    searchFilmResponses.add(it.results.get(0));
+                }
+            }
+            binding.gridView.adapter = GridAdapter(requireContext(), searchFilmResponses, listener = this@WelcomeSearchFragment)
+            binding.gridView.visibility = View.VISIBLE
+            Log.d(TAG, _viewModel.askResponse.toString())
+            _viewModel.backFromDetails = false
         }
     }
 
