@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import edu.hackathon.moviematch.api.film.SearchFilmResponse
 import edu.hackathon.moviematch.api.search.AskRequest
 import edu.hackathon.moviematch.api.search.AskResponse
 import edu.hackathon.moviematch.api.search.Message
@@ -40,15 +41,22 @@ class WelcomeSearchViewModel(
     private var _askResponse: AskResponse? = null
     val askResponse get() = _askResponse
 
+    private var _searchResult = MutableLiveData<ApiResults>()
+    val searchResult get() = _searchResult
+    private var _searchResponse: SearchFilmResponse? = null
+    val searchResponse get() = _searchResponse
+
     fun askForFilms(content: String) {
         _askResult.value = ApiResults.LOADING
+
+        val askContent: String = "Suggest films, which are connected to: `$content`. Provide only the titles, separate it with comas, without any extra signs."
         viewModelScope.launch {
             try {
                 val response = _repo.askForFilms(
                     token = "Bearer $token",
                     askRequest = AskRequest(
                         messages = listOf(
-                            Message(content = content)
+                            Message(content = askContent)
                         )
                     )
                 )
@@ -71,4 +79,33 @@ class WelcomeSearchViewModel(
         }
     }
 
+    fun searchForFilms(query: String) {
+        _searchResult.value = ApiResults.LOADING
+
+        viewModelScope.launch {
+            try {
+                val  response = _repo.searchMovieByName(
+                    apiKey = apiKey,
+                    language = "en-US",
+                    query = query,
+                    page = 1
+                )
+
+                if (response?.isSuccessful == true) {
+                    _searchResponse = response.body()!!
+
+                    _searchResult.value = ApiResults.SUCCESS
+
+                    Log.d(TAG, _searchResponse.toString())
+                }
+                else {
+                    _searchResult.value = ApiResults.INVALID_TOKEN
+                }
+            }
+            catch (ex: Exception) {
+                Log.e(TAG, ex.message, ex)
+                _searchResult.value = ApiResults.UNKNOWN_ERROR
+            }
+        }
+    }
 }

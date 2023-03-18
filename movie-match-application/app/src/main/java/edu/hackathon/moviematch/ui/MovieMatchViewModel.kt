@@ -13,7 +13,10 @@ abstract class MovieMatchViewModel(
         val TAG: String = MovieMatchViewModel::class.java.simpleName
     }
 
-    protected var _token: String? = Constants.TOKEN
+    protected var _token: String? = Constants.OPEN_AI_TOKEN
     protected val token get() = _token!!
+
+    protected var _apiKey: String? = Constants.MOVIE_DB_API_KEY
+    protected val apiKey get() = _apiKey!!
 
 }
