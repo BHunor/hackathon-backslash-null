@@ -99,7 +99,6 @@ class WelcomeSearchFragment : Fragment() {
 
                 ApiResults.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
-<<<<<<< Updated upstream
                     Log.d(TAG, _viewModel.askResponse!!.choices[0].message.content)
 
                     val queries = _viewModel.lastAskedContents
@@ -145,13 +144,26 @@ class WelcomeSearchFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Log.d(TAG, _viewModel.loadFilmsResult.toString())
 
-=======
                     //https://image.tmdb.org/t/p/w500/
-                    val images = arrayOf("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg")
-                    binding.gridView.adapter = GridAdapter(requireContext(), images)
+//                    val images = arrayOf("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg")
+                    var images = mutableListOf<String>()
+                    _viewModel.loadFilmsResponse?.forEach {
+                        if(images.size < 9) {
+                            images.add(
+                                "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${
+                                    it.results.get(
+                                        0
+                                    ).posterPath
+                                }"
+                            )
+                        }
+                    }
+                    Log.d("XXX", images.toString());
+
+                    binding.gridView.adapter = GridAdapter(requireContext(), images
+                    )
                     binding.gridView.visibility = View.VISIBLE
                     Log.d(TAG, _viewModel.askResponse.toString())
->>>>>>> Stashed changes
                 }
 
                 ApiResults.INVALID_TOKEN -> {

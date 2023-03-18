@@ -15,7 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.target.CustomTarget
 import edu.hackathon.moviematch.R
 
-class GridAdapter(private val context: Context, private val images: Array<String>) : BaseAdapter() {
+class GridAdapter(private val context: Context, private val images: MutableList<String>) : BaseAdapter() {
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                 val imageView: ImageView
