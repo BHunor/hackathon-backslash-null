@@ -14,14 +14,17 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.*
 import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import edu.hackathon.moviematch.R
+import edu.hackathon.moviematch.api.film.SearchFilmResponse
+import edu.hackathon.moviematch.api.film.SearchFilmResultResponse
 import edu.hackathon.moviematch.databinding.FragmentWelcomeSearchBinding
 import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.Preferences
+import androidx.navigation.fragment.findNavController
 
-
-class WelcomeSearchFragment : Fragment() {
+class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 
     companion object {
         val TAG = WelcomeSearchFragment::class.simpleName;
@@ -30,7 +33,9 @@ class WelcomeSearchFragment : Fragment() {
     private var _binding: FragmentWelcomeSearchBinding? = null
     private val binding get() = _binding!!
     private var _searching:Boolean = false
-    private lateinit var _viewModel: WelcomeSearchViewModel
+    private val _viewModel: WelcomeSearchViewModel by activityViewModels{
+        WelcomeSearchViewModelFactory(prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE), repo = Repo)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +49,10 @@ class WelcomeSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _viewModel = WelcomeSearchViewModelFactory(
-            prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE),
-            repo = Repo
-        ).create(WelcomeSearchViewModel::class.java)
+//        _viewModel = WelcomeSearchViewModelFactory(
+//            prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE),
+//            repo = Repo
+//        ).create(WelcomeSearchViewModel::class.java)
 
         binding.btnSearch.setOnClickListener {
             if(!binding.etSearch.text.isEmpty()) {
@@ -143,25 +148,13 @@ class WelcomeSearchFragment : Fragment() {
                 ApiResults.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     Log.d(TAG, _viewModel.loadFilmsResult.toString())
-
-                    //https://image.tmdb.org/t/p/w500/
-//                    val images = arrayOf("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg")
-                    var images = mutableListOf<String>()
+                    var searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
                     _viewModel.loadFilmsResponse?.forEach {
-                        if(images.size < 9) {
-                            images.add(
-                                "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${
-                                    it.results.get(
-                                        0
-                                    ).posterPath
-                                }"
-                            )
+                        if(searchFilmResponses.size < 9) {
+                            searchFilmResponses.add(it.results.get(0));
                         }
                     }
-                    Log.d("XXX", images.toString());
-
-                    binding.gridView.adapter = GridAdapter(requireContext(), images
-                    )
+                    binding.gridView.adapter = GridAdapter(requireContext(), searchFilmResponses, listener = this@WelcomeSearchFragment)
                     binding.gridView.visibility = View.VISIBLE
                     Log.d(TAG, _viewModel.askResponse.toString())
                 }
@@ -186,4 +179,11 @@ class WelcomeSearchFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
+
+    override fun onItemClick(item:SearchFilmResultResponse) {
+        _viewModel.selectedItem = item
+        findNavController().navigate(R.id.action_fragment_welcome_search_to_detailFragment)
+    }
+
+
 }

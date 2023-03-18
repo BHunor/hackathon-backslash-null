@@ -9,5 +9,18 @@
         android:id="@+id/fragment_welcome_search"
         tools:layout="@layout/fragment_welcome_search"
         android:name="edu.hackathon.moviematch.ui.welcome.WelcomeSearchFragment"
-        android:label="@string/welcome"/>
+        android:label="@string/welcome">
+        <action
+            android:id="@+id/action_fragment_welcome_search_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="edu.hackathon.moviematch.ui.welcome.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_fragment_welcome_search"
+            app:destination="@id/fragment_welcome_search" />
+    </fragment>
 </navigation>

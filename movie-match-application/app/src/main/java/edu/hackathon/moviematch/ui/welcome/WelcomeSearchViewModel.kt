@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import edu.hackathon.moviematch.api.film.SearchFilmResponse
+import edu.hackathon.moviematch.api.film.SearchFilmResultResponse
 import edu.hackathon.moviematch.api.search.AskRequest
 import edu.hackathon.moviematch.api.search.AskResponse
 import edu.hackathon.moviematch.api.search.Message
@@ -53,6 +54,8 @@ class WelcomeSearchViewModel(
 
     private var _lastAskedContents: MutableList<String>? = null
     val lastAskedContents get() = _lastAskedContents
+
+    var selectedItem: SearchFilmResultResponse? = null
     fun askForFilms(content: String) {
         _askResult.value = ApiResults.LOADING
 
