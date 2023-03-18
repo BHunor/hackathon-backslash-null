@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import edu.hackathon.moviematch.R
 import edu.hackathon.moviematch.api.user.LoginResults
 import edu.hackathon.moviematch.databinding.FragmentLoginBinding
@@ -61,7 +62,7 @@ class LoginFragment : Fragment() {
                     }
 
                     LoginResults.INVALID_CREDENTIALS -> {
-
+                        showErrorOnSnackBar();
                         return@observe
                     }
 
@@ -75,8 +76,11 @@ class LoginFragment : Fragment() {
             }
 
         }
-
-
+    }
+    fun showErrorOnSnackBar() {
+        val text = "Invalid user credentials!"
+        Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG)
+            .setDuration(5000).show()
     }
     override fun onDestroy() {
         super.onDestroy()
