@@ -16,7 +16,7 @@ object ApiClient {
 
     private var mRetrofit: Retrofit? = null
 
-    val apiClient: Retrofit?
+    val client: Retrofit?
         get() {
             if (mRetrofit == null) {
                 mRetrofit = Retrofit.Builder()

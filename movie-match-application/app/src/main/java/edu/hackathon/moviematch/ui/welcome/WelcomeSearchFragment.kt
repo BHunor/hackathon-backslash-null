@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import edu.hackathon.moviematch.R
+import edu.hackathon.moviematch.api.search.SearchApi
 import edu.hackathon.moviematch.databinding.FragmentWelcomeSearchBinding
+import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.Preferences
 
 class WelcomeSearchFragment : Fragment() {
@@ -34,8 +36,16 @@ class WelcomeSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         _viewModel = WelcomeSearchViewModelFactory(
-            prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE)
+            prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE),
+            repo = Repo
         ).create(WelcomeSearchViewModel::class.java)
+
+        binding.btnSearch.setOnClickListener {
+        }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
