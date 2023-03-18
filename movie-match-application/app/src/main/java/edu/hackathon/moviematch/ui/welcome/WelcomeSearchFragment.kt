@@ -91,6 +91,13 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                 observeAskResult()
             }
         }
+
+        binding.btnLogin.setOnClickListener{
+            findNavController().navigate(R.id.action_fragment_welcome_search_to_loginFragment)
+        }
+        binding.btnRegister.setOnClickListener{
+            findNavController().navigate(R.id.action_fragment_welcome_search_to_registerFragment2)
+        }
     }
 
     private fun observeAskResult() {

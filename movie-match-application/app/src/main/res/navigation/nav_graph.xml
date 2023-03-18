@@ -13,6 +13,12 @@
         <action
             android:id="@+id/action_fragment_welcome_search_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_fragment_welcome_search_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_fragment_welcome_search_to_registerFragment2"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -23,4 +29,14 @@
             android:id="@+id/action_detailFragment_to_fragment_welcome_search"
             app:destination="@id/fragment_welcome_search" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="edu.hackathon.moviematch.ui.authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="edu.hackathon.moviematch.ui.authentication.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

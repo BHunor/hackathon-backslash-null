@@ -22,31 +22,28 @@
 
         <EditText
             android:id="@+id/First_Name_edittext"
-            android:layout_width="358dp"
-            android:layout_height="52dp"
+            android:layout_width="192dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="48dp"
             android:background="@drawable/rounded_corner"
             android:hint="@string/first_name"
             android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mmlogo"
-            app:layout_constraintVertical_bias="0.099" />
+            app:layout_constraintTop_toBottomOf="@+id/mmlogo" />
 
         <EditText
             android:id="@+id/Last_Name_edittext"
-            android:layout_width="358dp"
-            android:layout_height="52dp"
+            android:layout_width="198dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="4dp"
             android:background="@drawable/rounded_corner"
             android:hint="@string/last_name"
             android:padding="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/First_Name_edittext"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintStart_toEndOf="@+id/First_Name_edittext"
+            app:layout_constraintTop_toBottomOf="@+id/mmlogo" />
 
         <EditText
             android:id="@+id/E_mail_edittext"
@@ -65,7 +62,7 @@
             android:id="@+id/password_edittext"
             android:layout_width="358dp"
             android:layout_height="52dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/rounded_corner"
             android:hint="@string/password"
             android:padding="10dp"
@@ -98,13 +95,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password_edittext"
+
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
             app:layout_constraintVertical_bias="0.867" />
 
 
         <ScrollView
-            android:layout_width="227dp"
-            android:layout_height="116dp"
+            android:id="@+id/scrollView2"
+            android:layout_width="232dp"
+            android:layout_height="232dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comf_password_edittext">
@@ -118,7 +117,8 @@
                 <CalendarView
                     android:id="@+id/calendarView"
                     android:layout_width="match_parent"
-                    android:layout_height="169dp" />
+                    android:layout_height="232dp"
+                    />
             </LinearLayout>
 
         </ScrollView>
