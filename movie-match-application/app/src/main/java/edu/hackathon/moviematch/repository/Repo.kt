@@ -1,11 +1,15 @@
 package edu.hackathon.moviematch.repository
 
 import edu.hackathon.moviematch.api.film.FilmApi
+import edu.hackathon.moviematch.api.film.FilmDetails
 import edu.hackathon.moviematch.api.film.SearchFilmResponse
 import edu.hackathon.moviematch.api.search.AskRequest
 import edu.hackathon.moviematch.api.search.AskResponse
 import edu.hackathon.moviematch.api.search.SearchApi
 import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 object Repo {
 
@@ -19,6 +23,14 @@ object Repo {
             language = language,
             query = query,
             page = page,
+        )
+    }
+
+    suspend fun getMovieDetail(id: Int, apiKey: String, language: String): Response<FilmDetails>? {
+        return FilmApi.getApi()?.getMovieDetail(
+            id = id,
+            apiKey = apiKey,
+            language = language,
         )
     }
 

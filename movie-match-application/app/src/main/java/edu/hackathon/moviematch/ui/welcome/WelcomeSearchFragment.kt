@@ -48,16 +48,9 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-//        _viewModel = WelcomeSearchViewModelFactory(
-//            prefs = requireActivity().getSharedPreferences(Preferences.PREFERENCES_NAME, Context.MODE_PRIVATE),
-//            repo = Repo
-//        ).create(WelcomeSearchViewModel::class.java)
-
         binding.btnSearch.setOnClickListener {
+            _viewModel.searchWord = binding.etSearch.text.toString()
             if(!binding.etSearch.text.isEmpty()) {
-                //            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
-                //            binding.etSearch.startAnimation(animation)
                 binding.mmlogo.visibility = View.GONE
                 if (!_searching) {
                     val anim = ObjectAnimator.ofFloat(binding.etSearch, "translationY", 0f, -900f)
@@ -74,7 +67,7 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                     anim2.start()
                     anim.addListener(object : AnimatorListenerAdapter() {
                         override fun onAnimationEnd(animation: Animator) {
-                            binding.etSearch.translationY = -900f // Az elem helyzetének beállítása
+                            binding.btnSearch.translationY = -900f // Az elem helyzetének beállítása
                         }
                     })
                     _searching = true;
@@ -90,6 +83,25 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                 )
                 observeAskResult()
             }
+        }
+        if(_viewModel.backFromDetails){
+            binding.mmlogo.visibility = View.GONE
+            binding.etSearch.translationY = -900f
+            binding.btnSearch.translationY = -900f
+            binding.etSearch.setText(_viewModel.searchWord)
+            _searching = true
+            binding.progressBar.visibility = View.GONE
+            Log.d(TAG, _viewModel.loadFilmsResult.toString())
+            var searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
+            _viewModel.loadFilmsResponse?.forEach {
+                if(searchFilmResponses.size < 9) {
+                    searchFilmResponses.add(it.results.get(0));
+                }
+            }
+            binding.gridView.adapter = GridAdapter(requireContext(), searchFilmResponses, listener = this@WelcomeSearchFragment)
+            binding.gridView.visibility = View.VISIBLE
+            Log.d(TAG, _viewModel.askResponse.toString())
+            _viewModel.backFromDetails = false
         }
     }
 

@@ -4,6 +4,7 @@ import edu.hackathon.moviematch.api.MovieDBClient
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface FilmApi {
@@ -19,5 +20,10 @@ interface FilmApi {
                             @Query("query") query: String,
                             @Query("page") page: Int
                             ): Response<SearchFilmResponse>
+
+    @GET("movie/{id}")
+    suspend fun getMovieDetail(@Path("id") id:Int,
+                               @Query("api_key") apiKey: String,
+                               @Query("language") language: String): Response<FilmDetails>
 
 }

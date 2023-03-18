@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import edu.hackathon.moviematch.api.film.FilmDetails
 import edu.hackathon.moviematch.api.film.SearchFilmResponse
 import edu.hackathon.moviematch.api.film.SearchFilmResultResponse
 import edu.hackathon.moviematch.api.search.AskRequest
@@ -37,6 +38,9 @@ class WelcomeSearchViewModel(
         val TAG: String = WelcomeSearchFragment::class.java.simpleName
     }
 
+    var backFromDetails: Boolean = false;
+    var searchWord: String = "";
+
     private var _askResult = MutableLiveData<ApiResults>()
     val askResult get() = _askResult
     private var _askResponse: AskResponse? = null
@@ -44,8 +48,14 @@ class WelcomeSearchViewModel(
 
     private var _searchResult = MutableLiveData<ApiResults>()
     val searchResult get() = _searchResult
+
+    private var _detailResult = MutableLiveData<ApiResults>()
+    val detailResult get() = _detailResult
     private var _searchResponse: SearchFilmResponse? = null
     val searchResponse get() = _searchResponse
+
+    private var _movieDetailResponse: FilmDetails? = null
+    val movieDetailsResponse get() = _movieDetailResponse
 
     private var _loadFilmsResult = MutableLiveData<ApiResults>()
     val loadFilmsResult get() = _loadFilmsResult
@@ -165,4 +175,35 @@ class WelcomeSearchViewModel(
         }
 
     }
+
+    fun detailMovie(id:Int)  {
+        _detailResult.value = ApiResults.LOADING
+
+        viewModelScope.launch {
+            try {
+                val  response = _repo.getMovieDetail(
+                    id = id,
+                    apiKey = apiKey,
+                    language = "en-US",
+                )
+
+                if (response?.isSuccessful == true) {
+                    _movieDetailResponse = response.body()!!
+
+                    _detailResult.value = ApiResults.SUCCESS
+
+                    Log.d(TAG, _searchResponse.toString())
+                }
+                else {
+                    _detailResult.value = ApiResults.INVALID_TOKEN
+                }
+            }
+            catch (ex: Exception) {
+                Log.e(TAG, ex.message, ex)
+                _detailResult.value = ApiResults.UNKNOWN_ERROR
+            }
+        }
+    }
+
+
 }
