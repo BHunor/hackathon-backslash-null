@@ -142,9 +142,6 @@ class WelcomeSearchViewModel(
                     )
 
                     if (response?.isSuccessful == true) {
-
-                        Log.d(TAG, "kicsikutya")
-
                         _loadFilmsResponse!!.add(
                             element = response.body()!!
                         )

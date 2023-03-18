@@ -23,6 +23,7 @@ import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.Preferences
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 
@@ -55,10 +56,11 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
 //        ).create(WelcomeSearchViewModel::class.java)
 
         binding.btnSearch.setOnClickListener {
-            if(!binding.etSearch.text.isEmpty()) {
+            if(binding.etSearch.text.isNotEmpty()) {
                 //            val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.slide_up)
                 //            binding.etSearch.startAnimation(animation)
                 binding.mmlogo.visibility = View.GONE
+                binding.tvHintText.visibility = View.GONE
                 if (!_searching) {
                     val anim = ObjectAnimator.ofFloat(binding.etSearch, "translationY", 0f, -900f)
                     anim.duration = 1000
@@ -129,12 +131,13 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                 }
 
                 ApiResults.INVALID_TOKEN -> {
-                    // WHAT TODO
+                    showErrorOnSnackBar()
                     Log.e(TAG, "INVALID TOKEN")
                     return@observe
                 }
 
                 ApiResults.UNKNOWN_ERROR -> {
+                    showErrorOnSnackBar()
                     Log.e(TAG, "UNKNOWN ERROR")
                     return@observe
                 }
@@ -155,10 +158,16 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                 ApiResults.SUCCESS -> {
                     binding.progressBar.visibility = View.GONE
                     Log.d(TAG, _viewModel.loadFilmsResult.toString())
-                    var searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
+
+                    if (_viewModel.loadFilmsResponse?.get(0)?.results!!.isEmpty()) {
+                        showErrorOnSnackBar()
+                        return@observe
+                    }
+
+                    val searchFilmResponses = mutableListOf<SearchFilmResultResponse>()
                     _viewModel.loadFilmsResponse?.forEach {
                         if(searchFilmResponses.size < 9) {
-                            searchFilmResponses.add(it.results.get(0));
+                            searchFilmResponses.add(it.results[0]);
                         }
                     }
                     binding.gridView.adapter = GridAdapter(requireContext(), searchFilmResponses, listener = this@WelcomeSearchFragment)
@@ -167,13 +176,14 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
                 }
 
                 ApiResults.INVALID_TOKEN -> {
-                    // WHAT TODO
                     Log.e(TAG, "INVALID TOKEN")
+                    showErrorOnSnackBar()
                     return@observe
                 }
 
                 ApiResults.UNKNOWN_ERROR -> {
                     Log.e(TAG, "UNKNOWN ERROR")
+                    showErrorOnSnackBar()
                     return@observe
                 }
 
@@ -185,6 +195,12 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    private fun showErrorOnSnackBar() {
+        val text = resources.getText(R.string.unknown_error)
+        Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG)
+            .setDuration(5000).show()
     }
 
     override fun onItemClick(item:SearchFilmResultResponse) {
