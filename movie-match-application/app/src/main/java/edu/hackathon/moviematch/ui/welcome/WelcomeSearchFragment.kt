@@ -192,7 +192,7 @@ class WelcomeSearchFragment : Fragment(), IOnItemClickListener {
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         super.onDestroy()
         _binding = null
     }

@@ -4,6 +4,7 @@
         android:id="@+id/fragment_feed"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home"
+        android:checked="true"
         />
 
     <item
