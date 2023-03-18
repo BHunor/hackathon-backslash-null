@@ -146,14 +146,12 @@ class WelcomeSearchFragment : Fragment() {
 
                     //https://image.tmdb.org/t/p/w500/
 //                    val images = arrayOf("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg")
-                    var images = mutableListOf<String>()
+                    val images = mutableListOf<String>()
                     _viewModel.loadFilmsResponse?.forEach {
                         if(images.size < 9) {
                             images.add(
                                 "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${
-                                    it.results.get(
-                                        0
-                                    ).posterPath
+                                    it.results[0].posterPath
                                 }"
                             )
                         }
