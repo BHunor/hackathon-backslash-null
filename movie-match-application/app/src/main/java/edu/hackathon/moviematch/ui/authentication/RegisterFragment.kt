@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import edu.hackathon.moviematch.R
 import edu.hackathon.moviematch.databinding.FragmentLoginBinding
+import edu.hackathon.moviematch.databinding.FragmentRegisterBinding
 
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-    private var _binding: FragmentLoginBinding? = null
+    private var _binding: FragmentRegisterBinding? = null
     val binding get() = _binding!!
 
 
@@ -19,15 +20,13 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentLoginBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentRegisterBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
 
     }
-
-
 }
