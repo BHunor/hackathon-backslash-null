@@ -25,4 +25,6 @@ data class SearchFilmResultResponse(
 data class SearchFilmResponse(
     @SerializedName("page")
     var page: Int,
+    @SerializedName("results")
+    var results: List<SearchFilmResultResponse>
 )

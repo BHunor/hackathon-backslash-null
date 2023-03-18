@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintLayout.*
 import androidx.core.view.marginLeft
 import androidx.fragment.app.Fragment
+import edu.hackathon.moviematch.R
 import edu.hackathon.moviematch.databinding.FragmentWelcomeSearchBinding
 import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
@@ -143,6 +144,26 @@ class WelcomeSearchFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     Log.d(TAG, _viewModel.loadFilmsResult.toString())
 
+                    //https://image.tmdb.org/t/p/w500/
+//                    val images = arrayOf("https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg")
+                    var images = mutableListOf<String>()
+                    _viewModel.loadFilmsResponse?.forEach {
+                        if(images.size < 9) {
+                            images.add(
+                                "https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${
+                                    it.results.get(
+                                        0
+                                    ).posterPath
+                                }"
+                            )
+                        }
+                    }
+                    Log.d("XXX", images.toString());
+
+                    binding.gridView.adapter = GridAdapter(requireContext(), images
+                    )
+                    binding.gridView.visibility = View.VISIBLE
+                    Log.d(TAG, _viewModel.askResponse.toString())
                 }
 
                 ApiResults.INVALID_TOKEN -> {
