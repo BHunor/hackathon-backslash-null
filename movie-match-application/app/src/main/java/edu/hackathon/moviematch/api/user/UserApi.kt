@@ -15,7 +15,7 @@ interface UserApi {
         }
     }
 
-    @POST("/login")
+    @POST("/user/login")
     suspend fun loginUser(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
 //    @GET("/user")

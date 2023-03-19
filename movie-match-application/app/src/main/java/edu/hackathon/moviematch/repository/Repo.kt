@@ -6,6 +6,9 @@ import edu.hackathon.moviematch.api.film.SearchFilmResponse
 import edu.hackathon.moviematch.api.search.AskRequest
 import edu.hackathon.moviematch.api.search.AskResponse
 import edu.hackathon.moviematch.api.search.SearchApi
+import edu.hackathon.moviematch.api.user.LoginRequest
+import edu.hackathon.moviematch.api.user.LoginResponse
+import edu.hackathon.moviematch.api.user.UserApi
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -32,6 +35,10 @@ object Repo {
             apiKey = apiKey,
             language = language,
         )
+    }
+
+    suspend fun loginUser(loginRequest: LoginRequest): Response<LoginResponse>? {
+        return UserApi.getApi()?.loginUser(loginRequest = loginRequest)
     }
 
 }

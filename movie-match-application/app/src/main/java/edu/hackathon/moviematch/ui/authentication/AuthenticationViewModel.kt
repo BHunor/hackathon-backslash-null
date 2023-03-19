@@ -47,12 +47,12 @@ class AuthenticationViewModel(
         viewModelScope.launch {
             try {
                 val loginRequest = LoginRequest(email, password)
-                //val loginRequest = LoginRequest("lazar.zsolt@student.ms.sapientia.ro", "3tracker_student19")
-                val response = true //userRepo.loginUser(loginRequest = loginRequest)
+//                val loginRequest = LoginRequest("lazar.zsolt@student.ms.sapientia.ro", "3tracker_student19")
+                val response = Repo.loginUser(loginRequest = loginRequest)
                 if (true){//response?.isSuccessful == true) {
                     //Log.d(TAG, "Login response ${response.body()}")
-                    //MyApplication.token = response.body()!!.token
-                    //MyApplication.deadline = response.body()!!.deadline
+//                    MyApplication.token = response.body()!!.token
+//                    MyApplication.deadline = response.body()!!.deadline
                     loginResult.value = LoginResults.SUCCESS
                 } else {
                     //Log.d(TAG, "Login error response ${response?.errorBody()}")
