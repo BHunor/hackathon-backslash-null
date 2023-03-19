@@ -10,4 +10,16 @@
     <color name="darkblack">#28282b</color>
     <color name="gray">#FF606060</color>
     <color name="mmred">#930504</color>
+    <color name="green">#59FF00</color>
+    <color name="yellow">#FFEA20</color>
+    <color name="darker_yellow">#FF9800</color>
+    <color name="darker_sad">#094950</color>
+    <color name="sad">#127681</color>
+    <color name="darker_tired">#8D8D86</color>
+    <color name="tired">#FFFFEC</color>
+    <color name="darker_romatic">#83264D</color>
+    <color name="romantic">#E4508F</color>
+    <color name="darker_adventure">#8B0D0D</color>
+    <color name="adventure">#E21818</color>
+    <color name="darker_bored">#2C2C2C</color>
 </resources>
