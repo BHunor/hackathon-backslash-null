@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
                     }
 
                     LoginResults.SUCCESS -> {
-                        findNavController().navigate(R.id.action_loginFragment_to_feedFragment)
+                        findNavController().navigate(R.id.fragment_feed)
                     }
 
                     LoginResults.INVALID_CREDENTIALS -> {
@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
                     }
 
                     LoginResults.UNKNOWN_ERROR -> {
-
+                        showErrorOnSnackBar();
                         return@observe
                     }
 

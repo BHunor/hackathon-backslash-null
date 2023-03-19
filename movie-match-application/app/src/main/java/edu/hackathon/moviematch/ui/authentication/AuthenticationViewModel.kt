@@ -41,23 +41,29 @@ class AuthenticationViewModel(
     fun login(email: String, password: String) {
         loginResult.value = LoginResults.LOADING
         if(email.isNullOrEmpty() || password.isNullOrEmpty()){
-           loginResult.value = LoginResults.INVALID_CREDENTIALS
+            loginResult.value = LoginResults.INVALID_CREDENTIALS
             return
         }
         viewModelScope.launch {
             try {
                 val loginRequest = LoginRequest(email, password)
-//                val loginRequest = LoginRequest("lazar.zsolt@student.ms.sapientia.ro", "3tracker_student19")
-                val response = Repo.loginUser(loginRequest = loginRequest)
-                if (true){//response?.isSuccessful == true) {
-                    //Log.d(TAG, "Login response ${response.body()}")
-//                    MyApplication.token = response.body()!!.token
-//                    MyApplication.deadline = response.body()!!.deadline
+                //val response = Repo.loginUser(loginRequest = loginRequest)
+
+                loginResult.value = LoginResults.SUCCESS
+
+                return@launch
+
+                /*
+                if (response?.isSuccessful == true) {
+                    Log.d(TAG, "Login response ${response.body()}")
+
+
                     loginResult.value = LoginResults.SUCCESS
                 } else {
                     //Log.d(TAG, "Login error response ${response?.errorBody()}")
                     loginResult.value = LoginResults.INVALID_CREDENTIALS
                 }
+                 */
 
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
