@@ -41,4 +41,11 @@ object Repo {
         return UserApi.getApi()?.loginUser(loginRequest = loginRequest)
     }
 
+    suspend fun getSimilarMovie(id: Int, apiKey: String, language: String): Response<SearchFilmResponse>? {
+        return FilmApi.getApi()?.getSimilarMovie(
+            id = id,
+            apiKey = apiKey,
+            language = language,
+        )
+    }
 }

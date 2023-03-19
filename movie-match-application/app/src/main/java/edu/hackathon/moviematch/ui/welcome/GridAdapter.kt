@@ -20,7 +20,6 @@ import edu.hackathon.moviematch.api.film.SearchFilmResultResponse
 interface IOnItemClickListener {
         fun onItemClick(item:SearchFilmResultResponse)
 }
-
 class GridAdapter(private val context: Context, private val searchFilmResultResponses: MutableList<SearchFilmResultResponse>, private val listener:IOnItemClickListener) : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                 val imageView: ImageView
@@ -28,7 +27,6 @@ class GridAdapter(private val context: Context, private val searchFilmResultResp
                         imageView = ImageView(context)
                         imageView.layoutParams = AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 600)
                         imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-//                        imageView.setBackgroundResource(R.drawable.rounded)
                 } else {
                         imageView = convertView as ImageView
                 }

@@ -25,5 +25,9 @@ interface FilmApi {
     suspend fun getMovieDetail(@Path("id") id:Int,
                                @Query("api_key") apiKey: String,
                                @Query("language") language: String): Response<FilmDetails>
-
+//movie/281957/similar?api_key=55b7f8db758832ecfab9176b81841cdf&language=en-US&page=1
+    @GET("/3/movie/{id}/similar")
+    suspend fun getSimilarMovie(@Path("id") id:Int,
+                               @Query("api_key") apiKey: String,
+                               @Query("language") language: String): Response<SearchFilmResponse>
 }

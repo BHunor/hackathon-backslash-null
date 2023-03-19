@@ -55,6 +55,9 @@
         <action
             android:id="@+id/action_fragment_feed_to_fragment_mood"
             app:destination="@id/fragment_mood" />
+        <action
+            android:id="@+id/action_fragment_feed_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_mood"

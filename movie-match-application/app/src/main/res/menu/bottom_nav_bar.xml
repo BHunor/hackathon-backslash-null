@@ -16,7 +16,7 @@
     <item
         android:id="@+id/thirdBotNav"
         android:icon="@drawable/ic_baseline_save_24"
-        android:title="@string/favorit"
+        android:title="@string/favorite"
         />
 
     <item
