@@ -1,4 +1,4 @@
-package edu.hackathon.moviematch.ui.welcome
+package edu.hackathon.moviematch.ui.mood
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -15,27 +15,27 @@ import edu.hackathon.moviematch.api.search.Message
 import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.MovieMatchViewModel
+import edu.hackathon.moviematch.ui.welcome.WelcomeSearchFragment
 import kotlinx.coroutines.launch
 
-
 @Suppress("UNCHECKED_CAST")
-class WelcomeSearchViewModelFactory(
+class MoodViewModelFactory(
     private val prefs: SharedPreferences,
     private val repo: Repo
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return WelcomeSearchViewModel(_prefs = prefs, _repo = repo) as T
+        return MoodViewModel(_prefs = prefs, _repo = repo) as T
     }
 }
-class WelcomeSearchViewModel(
+class MoodViewModel(
     _prefs: SharedPreferences,
     _repo: Repo
-) : MovieMatchViewModel (
+) : MovieMatchViewModel(
     _prefs = _prefs,
     _repo = _repo,
 ) {
     companion object {
-        val TAG: String = WelcomeSearchViewModel::class.java.simpleName
+        val TAG: String = MoodViewModel::class.java.simpleName
     }
 
     var backFromDetails: Boolean = false;
@@ -66,6 +66,10 @@ class WelcomeSearchViewModel(
     val lastAskedContents get() = _lastAskedContents
 
     var selectedItem: SearchFilmResultResponse? = null
+
+    var moods = listOf("happy", "sad", "tired", "romantic", "adventure", "bored")
+    var selectedMoodIndexes = mutableSetOf<Int>()
+
     fun askForFilms(content: String) {
         _askResult.value = ApiResults.LOADING
 
@@ -87,8 +91,8 @@ class WelcomeSearchViewModel(
                     _lastAskedContents = mutableListOf()
 
                     askResponse!!.choices[0].message.content.replace(".", "")
-                        .split("; ")
-                        .forEach{
+                        .split("; ").
+                        forEach{
                             lastAskedContents!!.add(it.replace("; ", ""))
                         }
 
@@ -158,7 +162,7 @@ class WelcomeSearchViewModel(
 
                         _loadFilmsResult.value = ApiResults.SUCCESS
 
-                        Log.d(TAG, _loadFilmsResponse.toString())
+                        Log.d(TAG, _searchResponse.toString())
                     }
                     else {
                         _loadFilmsResult.value = ApiResults.INVALID_TOKEN
@@ -166,7 +170,7 @@ class WelcomeSearchViewModel(
                 }
                 catch (ex: Exception) {
                     Log.e(TAG, ex.message, ex)
-                    _loadFilmsResult.value = ApiResults.UNKNOWN_ERROR
+                    _searchResult.value = ApiResults.UNKNOWN_ERROR
                 }
             }
         }
