@@ -75,5 +75,12 @@
         android:id="@+id/filmResultsFragment"
         android:name="edu.hackathon.moviematch.ui.mood.FilmResultsFragment"
         android:label="fragment_film_results"
-        tools:layout="@layout/fragment_film_results" />
+        tools:layout="@layout/fragment_film_results" >
+        <action
+            android:id="@+id/action_filmResultsFragment_to_fragment_mood"
+            app:destination="@id/fragment_mood" />
+        <action
+            android:id="@+id/action_filmResultsFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

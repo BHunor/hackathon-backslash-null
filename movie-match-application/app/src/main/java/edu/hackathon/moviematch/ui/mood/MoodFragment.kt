@@ -140,6 +140,7 @@ class MoodFragment : Fragment() {
             }
         }
         binding.search.setOnClickListener{
+            _viewModel.askForFilms()
             findNavController().navigate(R.id.action_fragment_mood_to_filmResultsFragment)
         }
     }

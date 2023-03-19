@@ -16,6 +16,7 @@ import edu.hackathon.moviematch.repository.Repo
 import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.MovieMatchViewModel
 import edu.hackathon.moviematch.ui.welcome.WelcomeSearchFragment
+import edu.hackathon.moviematch.ui.welcome.WelcomeSearchViewModel
 import kotlinx.coroutines.launch
 
 @Suppress("UNCHECKED_CAST")
@@ -70,10 +71,14 @@ class MoodViewModel(
     var moods = listOf("happy", "sad", "tired", "romantic", "adventure", "bored")
     var selectedMoodIndexes = mutableSetOf<Int>()
 
-    fun askForFilms(content: String) {
+    fun askForFilms() {
+        var content: String = ""
         _askResult.value = ApiResults.LOADING
+        selectedMoodIndexes.forEach{
+            content = content + " " + moods[it];
+        }
 
-        val askContent = "Suggest films, which are connected to: `$content`. Provide only the titles, separate it with semicolon, without any extra signs."
+        val askContent = "Suggest films, my mood is : `$content`. Provide only the titles, separate it with semicolon, without any extra signs."
         viewModelScope.launch {
             try {
                 val response = _repo.askForFilms(
@@ -205,6 +210,8 @@ class MoodViewModel(
             }
         }
     }
+
+
 
 
 }

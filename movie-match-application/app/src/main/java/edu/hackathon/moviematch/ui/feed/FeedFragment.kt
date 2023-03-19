@@ -8,9 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import edu.hackathon.moviematch.R
+import edu.hackathon.moviematch.api.film.SearchFilmResponse
 import edu.hackathon.moviematch.api.film.SearchFilmResultResponse
 import edu.hackathon.moviematch.databinding.FragmentFeedBinding
 import edu.hackathon.moviematch.repository.Repo
@@ -18,6 +21,7 @@ import edu.hackathon.moviematch.ui.ApiResults
 import edu.hackathon.moviematch.ui.MainActivity
 import edu.hackathon.moviematch.ui.Preferences
 import edu.hackathon.moviematch.ui.welcome.*
+import kotlinx.coroutines.launch
 
 
 class FeedFragment : Fragment(), IOnItemClickListener {
